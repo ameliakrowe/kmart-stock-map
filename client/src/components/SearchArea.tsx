@@ -4,8 +4,7 @@ import { SearchResults } from './SearchResults';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const requestUrl = "/api";
-const graphqlQuery = "";
+const requestUrl = "/api/getPostcodeSuggestions";
 
 export const SearchArea = () => {
     const [searchInput, setSearchInput] = useState<string>("");
@@ -19,11 +18,15 @@ export const SearchArea = () => {
             }
             
             try {
-                const response = await axios.get(requestUrl);
-                console.log(response);
+                const response = await axios.get(requestUrl, {
+                    params: {
+                        query: searchInput
+                    }
+                });
+                //console.log(response);
                 setSearchResults(response.data.list);
             } catch (err) {
-                console.log(err);
+                //console.log(err);
                 setSearchResults(["error"]);
             }
         };
