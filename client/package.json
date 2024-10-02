@@ -1,6 +1,9 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"]
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.13.3",

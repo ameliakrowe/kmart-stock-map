@@ -4,7 +4,7 @@ import { SearchResults } from './SearchResults';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const requestUrl = "https://api.kmart.com.au/gateway/graphql";
+const requestUrl = "/api";
 const graphqlQuery = "";
 
 export const SearchArea = () => {
@@ -19,12 +19,11 @@ export const SearchArea = () => {
             }
             
             try {
-                const response = await axios.post(requestUrl, {
-                    operationName: "GetStoreLocationSuggestions",
-                    query: graphqlQuery,
-                });
-                setSearchResults(["success"]);
+                const response = await axios.get(requestUrl);
+                console.log(response);
+                setSearchResults(response.data.list);
             } catch (err) {
+                console.log(err);
                 setSearchResults(["error"]);
             }
         };
