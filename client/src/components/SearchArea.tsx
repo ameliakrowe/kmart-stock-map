@@ -8,12 +8,12 @@ const requestUrl = "/api/getPostcodeSuggestions";
 
 export const SearchArea = () => {
     const [searchInput, setSearchInput] = useState<string>("");
-    const [searchResults, setSearchResults] = useState<string[]>([]);
+    const [searchResults, setSearchResults] = useState<string>("");
 
     useEffect(() => {
         const fetchData = async () => {
             if (searchInput.length < 3) {
-                setSearchResults([]);
+                setSearchResults("");
                 return;
             }
             
@@ -23,11 +23,10 @@ export const SearchArea = () => {
                         query: searchInput
                     }
                 });
-                //console.log(response);
-                setSearchResults(response.data.list);
+                console.log(response.data.data.postcodeQuery);
+                setSearchResults(JSON.stringify(response.data.data.postcodeQuery));
             } catch (err) {
-                //console.log(err);
-                setSearchResults(["error"]);
+                setSearchResults("error");
             }
         };
 

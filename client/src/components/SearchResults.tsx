@@ -1,11 +1,9 @@
 type SearchResultProps = {
-    results: string[];
+    results: string;
 }
 
 export const SearchResults = (props: SearchResultProps) => {
     return (
-        <ul>
-            {props.results.map((result) => <li>{result}</li>)}
-        </ul>
+        <p>{props.results}</p>
     )
 };
