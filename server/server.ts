@@ -12,10 +12,12 @@ app.get("/api/getPostcodeSuggestions", async (req: Request, res: Response) => {
 
     try {
         const result = await getPostcodeSuggestions(query);
-        //console.log(result);
         res.status(200).json(result);
     } catch (error) {
-        res.status(200).json({"list": ["abc"]});
+        res.status(500).json({
+            success: false,
+            message: "Failed to get postcode suggestions"
+        });
     }
 });
 

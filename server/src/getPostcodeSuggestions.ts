@@ -34,7 +34,6 @@ export async function getPostcodeSuggestions(queryString: string) {
                 'Content-Type': 'application/json'
             }
         });
-        //console.log(JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.error("Error fetching data from GraphQL API:", error);
