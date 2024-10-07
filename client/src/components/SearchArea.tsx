@@ -23,7 +23,6 @@ export const SearchArea = () => {
                         query: searchInput
                     }
                 });
-                console.log(response.data.data.postcodeQuery);
                 setSearchResults(JSON.stringify(response.data.data.postcodeQuery));
             } catch (err) {
                 setSearchResults("error");
