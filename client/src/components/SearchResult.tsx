@@ -1,3 +1,6 @@
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+
 type SearchResultProps = {
     suburb: string,
     state: string,
@@ -7,6 +10,8 @@ type SearchResultProps = {
 export const SearchResult = (props: SearchResultProps) => {
     const { suburb, state, postcode } = props;
     return (
-        <p>{suburb + ", " + state + ", " + postcode}</p>
+        <ListItemButton>
+            <ListItemText primary={suburb + ", " + state + ", " + postcode} />
+        </ListItemButton>
     )
 };
