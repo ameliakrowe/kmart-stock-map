@@ -1,5 +1,6 @@
 import { SearchBar } from './SearchBar';
 import { SearchResults } from './SearchResults';
+import { Result } from '../types/Result';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,12 +9,12 @@ const requestUrl = "/api/getPostcodeSuggestions";
 
 export const SearchArea = () => {
     const [searchInput, setSearchInput] = useState<string>("");
-    const [searchResults, setSearchResults] = useState<string>("");
+    const [searchResults, setSearchResults] = useState<Result[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             if (searchInput.length < 3) {
-                setSearchResults("");
+                setSearchResults([]);
                 return;
             }
             
@@ -23,9 +24,9 @@ export const SearchArea = () => {
                         query: searchInput
                     }
                 });
-                setSearchResults(JSON.stringify(response.data.data.postcodeQuery));
+                setSearchResults(response.data.data.postcodeQuery.map((item: any) => item as Result));
             } catch (err) {
-                setSearchResults("error");
+                setSearchResults([]);
             }
         };
 
