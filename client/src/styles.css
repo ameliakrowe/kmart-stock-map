@@ -25,9 +25,16 @@
   color: white;
 }
 
+.map-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+}
+
 .Map-display {
-  width: 500px;
-  height: 300px;
+  width: 750px;
+  height: 600px;
 }
 
 .Search-bar {
