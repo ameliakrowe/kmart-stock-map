@@ -1,7 +1,4 @@
-type Location = {
-    lat: number,
-    lon: number
-}
+import { Location } from "./Location"
 
 export type Result = {
     postcode: string,

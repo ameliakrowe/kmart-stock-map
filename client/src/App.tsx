@@ -25,7 +25,7 @@ function App() {
         </p>
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
-      <MapDisplay />
+      <MapDisplay location={currentLocation.location}/>
     </div>
   );
 }

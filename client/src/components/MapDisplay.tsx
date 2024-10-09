@@ -1,8 +1,14 @@
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { Location } from "../types/Location";
 
 const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
 
-export const MapDisplay = () => {
+type MapDisplayProps = {
+    location: Location
+}
+
+export const MapDisplay = (props: MapDisplayProps) => {
+    const { lat, lon } = props.location;
     return (
         <div className="map-area">
             <APIProvider
@@ -11,8 +17,8 @@ export const MapDisplay = () => {
             >
                 <Map
                     className="Map-display"
+                    center={lat === 0 && lon === 0 ? {lat: -33.86, lng: 151.21} : {lat, lng: lon}}
                     defaultZoom={13}
-                    defaultCenter={{lat: -33.86, lng: 151.21}}
                 />
             </APIProvider>
         </div>
