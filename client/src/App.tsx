@@ -17,7 +17,6 @@ function App() {
     }
   });
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const [stockSearchInput, setStockSearchInput] = useState<string>("");
 
   return (
     <div className="App">
@@ -28,7 +27,7 @@ function App() {
         </p>
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
-      <ProductSearch handleInput={(e: React.ChangeEvent<HTMLInputElement>) => setStockSearchInput(e.target.value)} value={stockSearchInput}/>
+      <ProductSearch />
       <MapDisplay location={currentLocation.location}/>
     </div>
   );
