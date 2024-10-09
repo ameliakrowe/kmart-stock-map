@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { SearchArea } from './SearchArea';
+import { Result } from '../types/Result';
 
 type LocationModalProps = {
     isOpen: boolean
     onClose: () => void
+    handleSearchResultClick: (suburb: Result) => void
 }
 
 const style = {
@@ -26,7 +28,7 @@ export const LocationModal = (props: LocationModalProps) => {
         >
             <Box sx={style}>
                 <b>Select a location</b>
-                <SearchArea/>
+                <SearchArea handleSearchResultClick={props.handleSearchResultClick}/>
             </Box>
         </Modal>
     )

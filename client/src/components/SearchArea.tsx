@@ -4,10 +4,15 @@ import { Result } from '../types/Result';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { PropaneSharp } from '@mui/icons-material';
 
 const requestUrl = "/api/getPostcodeSuggestions";
 
-export const SearchArea = () => {
+type SearchAreaProps = {
+    handleSearchResultClick: (suburb: Result) => void
+}
+
+export const SearchArea = (props: SearchAreaProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Result[]>([]);
 
@@ -44,7 +49,7 @@ export const SearchArea = () => {
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
                 value={searchInput}
             />
-            <SearchResults results={searchResults}/>
+            <SearchResults results={searchResults} handleSearchResultClick={(suburb: Result) => props.handleSearchResultClick(suburb)}/>
         </>        
     )
 };

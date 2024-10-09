@@ -2,11 +2,19 @@ import './styles.css';
 import { LocationBanner } from './components/LocationBanner';
 import { LocationModal } from './components/LocationModal';
 import { MapDisplay } from './components/MapDisplay';
-import { SearchArea } from './components/SearchArea';
+import { Result } from './types/Result';
 import { useState } from 'react';
 
 function App() {
-  const [currentLocation, setCurrentLocation] = useState<string>("Ultimo");
+  const [currentLocation, setCurrentLocation] = useState<Result>({
+    suburb: "",
+    postcode: "",
+    state: "",
+    location: {
+      lat: 0,
+      lon: 0
+    }
+  });
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   return (
     <div className="App">
@@ -16,8 +24,7 @@ function App() {
           Kmart Stock Map
         </p>
       </header>
-      <SearchArea />
-      <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}/>
+      <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
     </div>
   );
 }
