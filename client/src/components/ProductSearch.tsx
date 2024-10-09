@@ -2,12 +2,12 @@ import { SearchBar } from "./SearchBar"
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-type StockSearchProps = {
+type ProductSearchProps = {
     handleInput: (e: React.ChangeEvent<HTMLInputElement>) => void
     value: string
 }
 
-export const StockSearch = (props: StockSearchProps) => {
+export const ProductSearch = (props: ProductSearchProps) => {
     return (
         <div className="stock-search">
             <SearchBar
