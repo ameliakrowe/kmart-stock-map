@@ -42,3 +42,9 @@
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
+.stock-search {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

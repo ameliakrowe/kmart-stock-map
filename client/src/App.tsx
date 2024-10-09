@@ -3,6 +3,7 @@ import { LocationBanner } from './components/LocationBanner';
 import { LocationModal } from './components/LocationModal';
 import { MapDisplay } from './components/MapDisplay';
 import { Result } from './types/Result';
+import { StockSearch } from './components/StockSearch';
 import { useState } from 'react';
 
 function App() {
@@ -16,6 +17,8 @@ function App() {
     }
   });
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [stockSearchInput, setStockSearchInput] = useState<string>("");
+
   return (
     <div className="App">
       <LocationBanner selectedLocation={currentLocation} handleOpenModal={() => setModalIsOpen(true)}/>
@@ -25,6 +28,7 @@ function App() {
         </p>
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
+      <StockSearch handleInput={(e: React.ChangeEvent<HTMLInputElement>) => setStockSearchInput(e.target.value)} value={stockSearchInput}/>
       <MapDisplay location={currentLocation.location}/>
     </div>
   );
