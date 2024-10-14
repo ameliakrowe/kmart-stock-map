@@ -1,17 +1,46 @@
 import axios from 'axios';
+import { getNearestLocations } from './getNearestLocations';
 
 const kmartAPIUrl = "https://api.kmart.com.au/gateway/graphql";
 
-function convertClickAndCollectLocationtoResponse(location: any) {
-    return {
-        locationId: location.location.locationId,
-        isBuddyLocation: location.fulfilment.isBuddyLocation,
-        fulfilmentLocationId: location.fulfilment.locationId,
-        quantityAvailable: location.fulfilment.stock.available
+async function getFullLocationsFromResponseLocations(locations: any[], searchLat: string, searchLon: string) {
+    try {
+        const nearestLocationsResponse = await getNearestLocations(searchLat, searchLon, "100");
+        //console.log(JSON.stringify(locations));
+        //console.log(JSON.stringify(nearestLocationsResponse));
+
+        const result: any[] = [];
+
+        locations.forEach((location) => {
+            //console.log(JSON.stringify(location));
+            const matchingLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.location.locationId);
+            //console.log(JSON.stringify(matchingLocations));
+            const matchingLocation = matchingLocations.length > 0 ? matchingLocations[0] : null;
+            const matchingFulfilmentLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.fulfilment.locationId);
+            //console.log(JSON.stringify(matchingFulfilmentLocations));
+            const matchingFulfilmentLocation = matchingFulfilmentLocations.length > 0 ? matchingFulfilmentLocations[0] : null;
+            const locationResult = matchingLocation && matchingFulfilmentLocation ? {
+                locationId: location.location.locationId,
+                publicName: matchingLocation.publicName,
+                lat: matchingLocation.latitude,
+                lon: matchingLocation.longitude,
+                isBuddyLocation: location.fulfilment.isBuddyLocation,
+                fulfilmentLocationId: location.fulfilment.locationId,
+                fulfilmentLocationName: matchingFulfilmentLocation.publicName,
+                quantityAvailable: location.fulfilment.stock.available
+            }: {};
+
+            matchingLocation && matchingFulfilmentLocation && result.push(locationResult);
+        });
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.error("Error fetching data from nearest locations API", error);
+        throw new Error("Failed to fetch data");
     }
 }
 
-export async function getProductAvailability(productSKU: string, postcode: string) {
+export async function getProductAvailability(productSKU: string, postcode: string, lat: string, lon: string) {
     const apiQuery = `
         query getProductAvailability($input: ProductAvailabilityQueryInput!) {
             getProductAvailability(input: $input) {
@@ -54,7 +83,7 @@ export async function getProductAvailability(productSKU: string, postcode: strin
       }
 
     try {
-        const response = await axios.post(kmartAPIUrl, {
+        const productResponse = await axios.post(kmartAPIUrl, {
             query: apiQuery,
             operationName: "getProductAvailability",
             variables
@@ -64,13 +93,21 @@ export async function getProductAvailability(productSKU: string, postcode: strin
             }
         });
 
-        const responseClickAndCollect = response.data.data.getProductAvailability.availability.CLICK_AND_COLLECT;
+        const responseClickAndCollect = productResponse.data.data.getProductAvailability.availability.CLICK_AND_COLLECT;
 
-        const transformedResponse = {
-            clickAndCollect: [responseClickAndCollect[0].locations.map((location: any) => convertClickAndCollectLocationtoResponse(location))],
-            inStore: []
-        };
-        return transformedResponse;
+        try {
+            const fullLocations = await getFullLocationsFromResponseLocations(responseClickAndCollect[0].locations, lat, lon);
+
+            const transformedResponse = {
+                clickAndCollect: fullLocations,
+                inStore: []
+            };
+            return transformedResponse;
+        }
+        catch (error) {
+            console.error("Error getting full location details:", error);
+            throw new Error("Failed to fetch data");
+        }
     } catch (error) {
         console.error("Error fetching data from GraphQL API:", error);
         throw new Error("Failed to fetch data");

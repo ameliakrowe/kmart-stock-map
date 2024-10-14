@@ -4,14 +4,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import axios from 'axios';
 
-const requestUrl = "/api/getProductAvailability";
+const availabilityRequestUrl = "/api/getProductAvailability";
 
 export const ProductSearch = () => {
     const [searchInput, setSearchInput] = useState<string>("");
 
     const fetchProductAvailability = async (productID: string) => {        
         try {
-            const response = await axios.get(requestUrl, {
+            const response = await axios.get(availabilityRequestUrl, {
                 params: {
                     productSKU: productID,
                     postcode: "2000"

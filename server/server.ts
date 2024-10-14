@@ -26,9 +26,11 @@ app.get("/api/getPostcodeSuggestions", async (req: Request, res: Response) => {
 app.get("/api/getProductAvailability", async (req: Request, res: Response) => {
     const productSKU = req.query.productSKU as string;
     const postcode = req.query.postcode as string;
+    const lat = req.query.lat as string;
+    const lon = req.query.lon as string;
 
     try {
-        const result = await getProductAvailability(productSKU, postcode);
+        const result = await getProductAvailability(productSKU, postcode, lat, lon);
         res.status(200).json(result);
     } catch (error) {
         res.status(500).json({
