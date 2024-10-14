@@ -32,7 +32,7 @@ async function getFullLocationsFromResponseLocations(locations: any[], searchLat
 
             matchingLocation && matchingFulfilmentLocation && result.push(locationResult);
         });
-        console.log(result);
+        //console.log(result);
         return result;
     } catch (error) {
         console.error("Error fetching data from nearest locations API", error);
@@ -41,7 +41,7 @@ async function getFullLocationsFromResponseLocations(locations: any[], searchLat
 }
 
 export async function getProductAvailability(productSKU: string, postcode: string, lat: string, lon: string) {
-    const apiQuery = `
+    const clickAndCollectApiQuery = `
         query getProductAvailability($input: ProductAvailabilityQueryInput!) {
             getProductAvailability(input: $input) {
                 availability {
@@ -64,7 +64,7 @@ export async function getProductAvailability(productSKU: string, postcode: strin
         }
     `;
 
-    const variables = {
+    const clickAndCollectVariables = {
         input: {
           country: "AU",
           postcode,
@@ -80,30 +80,61 @@ export async function getProductAvailability(productSKU: string, postcode: strin
             "CLICK_AND_COLLECT"
           ]
         }
-      }
+    }
 
-    console.log(apiQuery);
-    console.log(variables);
+    const inStoreApiQuery = `
+        query getFindInStore($input: FindInStoreQueryInput!) {
+            findInStoreQuery(input: $input) {
+                keycode
+                inventory {
+                    locationName
+                    locationId
+                    stockLevel
+                }
+            }
+        }
+    `;
+
+    const inStoreVariables = {
+        input: {
+          country: "AU",
+          postcode,
+          keycodes: [productSKU]
+        }
+    };
+
+    //console.log(clickAndCollectApiQuery);
+    //console.log(clickAndCollectVariables);
 
     try {
-        const productResponse = await axios.post(kmartAPIUrl, {
-            query: apiQuery,
+        const clickAndCollectResponse = await axios.post(kmartAPIUrl, {
+            query: clickAndCollectApiQuery,
             operationName: "getProductAvailability",
-            variables
+            variables: clickAndCollectVariables
         }, {
             headers: {
                 'Content-Type': 'application/json'
             }
         });
 
-        const responseClickAndCollect = productResponse.data.data.getProductAvailability.availability.CLICK_AND_COLLECT;
+        const clickAndCollectInfo = clickAndCollectResponse.data.data.getProductAvailability.availability.CLICK_AND_COLLECT;
+
+        const inStoreResponse = await axios.post(kmartAPIUrl, {
+            query: inStoreApiQuery,
+            operationName: "getFindInStore",
+            variables: inStoreVariables
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
         try {
-            const fullLocations = await getFullLocationsFromResponseLocations(responseClickAndCollect[0].locations, lat, lon);
+            const fullLocations = await getFullLocationsFromResponseLocations(clickAndCollectInfo[0].locations, lat, lon);
 
             const transformedResponse = {
                 clickAndCollect: fullLocations,
-                inStore: []
+                inStore: inStoreResponse.data.data.findInStoreQuery[0].inventory
             };
             return transformedResponse;
         }
