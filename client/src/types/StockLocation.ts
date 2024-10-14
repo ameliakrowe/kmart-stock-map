@@ -7,4 +7,5 @@ export type StockLocation = {
     fulfilmentLocationId: string,
     fulfilmentLocationName: string,
     quantityAvailable: number
+    inStoreStockLevel?: string,
 }

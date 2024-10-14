@@ -18,6 +18,18 @@ export const ProductSearch = (props: ProductSearchProps) => {
 
     const {currentLocation, onProductAvailabilityFetched} = props;
 
+    const combineCandCAndInStoreInfo = (data: any) => {
+        console.log(JSON.stringify(data));
+        const result: StockLocation[] = [];
+        data.clickAndCollect.forEach((cAndCLocation: any) => {
+            const matchingInStoreLocations = data.inStore.filter((inStoreLocation: any) => cAndCLocation.locationId == inStoreLocation.locationId);
+            console.log(matchingInStoreLocations);
+            result.push(matchingInStoreLocations.length > 0 ? {...cAndCLocation, inStoreStockLevel: matchingInStoreLocations[0].stockLevel} : cAndCLocation);
+        })
+        console.log(result);
+        return result;
+    }
+
     const fetchProductAvailability = async (productID: string) => {        
         try {
             const response = await axios.get(availabilityRequestUrl, {
@@ -29,7 +41,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
                 }
             });
             //console.log(response);
-            onProductAvailabilityFetched(response.data.clickAndCollect.map((item: any) => item as StockLocation))
+            onProductAvailabilityFetched(combineCandCAndInStoreInfo(response.data))
         } catch (err) {
             console.log(err);
         }

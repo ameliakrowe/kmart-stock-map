@@ -31,6 +31,7 @@ export const MarkerWithInfoWindow = (props: MarkerWithInfoWindowProps) => {
         {infoWindowShown && (
           <InfoWindow anchor={marker} headerContent={<b>{location.publicName}</b>} onClose={handleClose}>
             <p>Quantity available for click and collect: {location.quantityAvailable}</p>
+            {location.inStoreStockLevel && <p>Stock level in store: {location.inStoreStockLevel}</p>}
           </InfoWindow>
         )}
       </>
