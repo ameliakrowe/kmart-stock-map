@@ -1,14 +1,16 @@
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
-import { Location } from "../types/Location";
+import { Coords } from "../types/Coords";
+import { StockLocation } from "../types/StockLocation";
 
 const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
 
 type MapDisplayProps = {
-    location: Location
+    centerLocation: Coords,
+    stockLocations: StockLocation[]
 }
 
 export const MapDisplay = (props: MapDisplayProps) => {
-    const { lat, lon } = props.location;
+    const { lat, lon } = props.centerLocation;
     return (
         <div className="map-area">
             <APIProvider

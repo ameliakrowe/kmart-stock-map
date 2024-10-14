@@ -4,7 +4,6 @@ import { Result } from '../types/Result';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { PropaneSharp } from '@mui/icons-material';
 
 const requestUrl = "/api/getPostcodeSuggestions";
 

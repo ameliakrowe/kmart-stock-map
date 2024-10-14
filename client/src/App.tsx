@@ -5,6 +5,7 @@ import { MapDisplay } from './components/MapDisplay';
 import { Result } from './types/Result';
 import { ProductSearch } from './components/ProductSearch';
 import { useState } from 'react';
+import { StockLocation } from "./types/StockLocation";
 
 function App() {
   const [currentLocation, setCurrentLocation] = useState<Result>({
@@ -16,6 +17,7 @@ function App() {
       lon: 0
     }
   });
+  const [availableProductLocations, setAvailableProductLocations] = useState<StockLocation[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   return (
@@ -27,8 +29,8 @@ function App() {
         </p>
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
-      <ProductSearch />
-      <MapDisplay location={currentLocation.location}/>
+      <ProductSearch currentLocation={currentLocation} onProductAvailabilityFetched={setAvailableProductLocations}/>
+      <MapDisplay centerLocation={currentLocation.location} stockLocations={availableProductLocations}/>
     </div>
   );
 }

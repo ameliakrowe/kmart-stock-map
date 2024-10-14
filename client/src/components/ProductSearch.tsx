@@ -3,23 +3,35 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import axios from 'axios';
+import { StockLocation } from "../types/StockLocation";
+import { Result } from '../types/Result';
 
 const availabilityRequestUrl = "/api/getProductAvailability";
 
-export const ProductSearch = () => {
+type ProductSearchProps = {
+    currentLocation: Result,
+    onProductAvailabilityFetched: (locations: StockLocation[]) => void
+}
+
+export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
+
+    const {currentLocation, onProductAvailabilityFetched} = props;
 
     const fetchProductAvailability = async (productID: string) => {        
         try {
             const response = await axios.get(availabilityRequestUrl, {
                 params: {
                     productSKU: productID,
-                    postcode: "2000"
+                    postcode: currentLocation.postcode,
+                    lat: currentLocation.location.lat,
+                    lon: currentLocation.location.lon
                 }
             });
             console.log(response);
+            onProductAvailabilityFetched(response.data.clickAndCollect.map((item: any) => item as StockLocation))
         } catch (err) {
-            console.log("error");
+            console.log(err);
         }
     };
 
