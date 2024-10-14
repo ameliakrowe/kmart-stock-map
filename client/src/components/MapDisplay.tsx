@@ -1,4 +1,4 @@
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
 import { Coords } from "../types/Coords";
 import { StockLocation } from "../types/StockLocation";
 
@@ -11,6 +11,7 @@ type MapDisplayProps = {
 
 export const MapDisplay = (props: MapDisplayProps) => {
     const { lat, lon } = props.centerLocation;
+
     return (
         <div className="map-area">
             <APIProvider
@@ -21,7 +22,11 @@ export const MapDisplay = (props: MapDisplayProps) => {
                     className="Map-display"
                     center={lat === 0 && lon === 0 ? {lat: -33.86, lng: 151.21} : {lat, lng: lon}}
                     defaultZoom={13}
-                />
+                >
+                    {props.stockLocations.map((location: StockLocation) => (
+                        <Marker position={{lat: Number(location.lat), lng: Number(location.lon)}}/>
+                    ))}
+                </Map>
             </APIProvider>
         </div>
         

@@ -28,7 +28,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
                     lon: currentLocation.location.lon
                 }
             });
-            console.log(response);
+            //console.log(response);
             onProductAvailabilityFetched(response.data.clickAndCollect.map((item: any) => item as StockLocation))
         } catch (err) {
             console.log(err);

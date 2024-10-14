@@ -12,12 +12,12 @@ async function getFullLocationsFromResponseLocations(locations: any[], searchLat
         const result: any[] = [];
 
         locations.forEach((location) => {
-            console.log(JSON.stringify(location));
+            //console.log(JSON.stringify(location));
             const matchingLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.location.locationId);
-            console.log(JSON.stringify(matchingLocations));
+            //console.log(JSON.stringify(matchingLocations));
             const matchingLocation = matchingLocations.length > 0 ? matchingLocations[0] : null;
             const matchingFulfilmentLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.fulfilment.locationId);
-            console.log(JSON.stringify(matchingFulfilmentLocations));
+            //console.log(JSON.stringify(matchingFulfilmentLocations));
             const matchingFulfilmentLocation = matchingFulfilmentLocations.length > 0 ? matchingFulfilmentLocations[0] : null;
             const locationResult = matchingLocation && matchingFulfilmentLocation ? {
                 locationId: location.location.locationId,
