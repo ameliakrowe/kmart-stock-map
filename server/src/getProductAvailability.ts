@@ -1,22 +1,28 @@
 import axios from 'axios';
 import { getNearestLocations } from './getNearestLocations';
+import { ResponseLocation } from './types/ResponseLocation';
+import { FullLocation } from './types/FullLocation';
+import { NearestLocationsResponse } from './types/NearestLocationsResponse';
+import { NearestLocation } from './types/NearestLocation';
 
 const kmartAPIUrl = "https://api.kmart.com.au/gateway/graphql";
 
-async function getFullLocationsFromResponseLocations(locations: any[], searchLat: string, searchLon: string) {
+async function getFullLocationsFromResponseLocations(locations: ResponseLocation[], searchLat: string, searchLon: string): Promise<FullLocation[]> {
     try {
-        const nearestLocationsResponse = await getNearestLocations(searchLat, searchLon, "100");
+        //console.log(JSON.stringify(locations));
+        const nearestLocationsResponse: NearestLocationsResponse = await getNearestLocations(searchLat, searchLon, "100");
+        console.log(JSON.stringify(nearestLocationsResponse));
         //console.log(JSON.stringify(locations));
         //console.log(JSON.stringify(nearestLocationsResponse));
 
-        const result: any[] = [];
+        const result: FullLocation[] = [];
 
         locations.forEach((location) => {
             //console.log(JSON.stringify(location));
-            const matchingLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.location.locationId);
+            const matchingLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: NearestLocation) => nearestLocation.locationId == location.location.locationId);
             //console.log(JSON.stringify(matchingLocations));
             const matchingLocation = matchingLocations.length > 0 ? matchingLocations[0] : null;
-            const matchingFulfilmentLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: any) => nearestLocation.locationId == location.fulfilment.locationId);
+            const matchingFulfilmentLocations = nearestLocationsResponse.nearestLocations.filter((nearestLocation: NearestLocation) => nearestLocation.locationId == location.fulfilment.locationId);
             //console.log(JSON.stringify(matchingFulfilmentLocations));
             const matchingFulfilmentLocation = matchingFulfilmentLocations.length > 0 ? matchingFulfilmentLocations[0] : null;
             const locationResult = matchingLocation && matchingFulfilmentLocation ? {
@@ -28,9 +34,11 @@ async function getFullLocationsFromResponseLocations(locations: any[], searchLat
                 fulfilmentLocationId: location.fulfilment.locationId,
                 fulfilmentLocationName: matchingFulfilmentLocation.publicName,
                 quantityAvailable: location.fulfilment.stock.available
-            }: {};
+            }: undefined;
+            //console.log(locationResult);
 
-            matchingLocation && matchingFulfilmentLocation && result.push(locationResult);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            locationResult && result.push(locationResult);
         });
         //console.log(result);
         return result;

@@ -16,6 +16,7 @@ app.get("/api/getPostcodeSuggestions", async (req: Request, res: Response) => {
         const result = await getPostcodeSuggestions(query);
         res.status(200).json(result);
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             success: false,
             message: "Failed to get postcode suggestions"
@@ -33,6 +34,7 @@ app.get("/api/getProductAvailability", async (req: Request, res: Response) => {
         const result = await getProductAvailability(productSKU, postcode, lat, lon);
         res.status(200).json(result);
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             success: false,
             message: "Failed to get product availability"
@@ -49,6 +51,7 @@ app.get("/api/getNearestLocations", async (req: Request, res: Response) => {
         const result = await getNearestLocations(lat, lon, distance);
         res.status(200).json(result);
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             success: false,
             message: "Failed to get nearest locations"
