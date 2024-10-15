@@ -1,10 +1,13 @@
 import { SearchBar } from "./SearchBar"
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { StockLocation } from "../types/StockLocation";
 import { Result } from '../types/Result';
+import { ProductAvailabilityResponse } from "../types/ProductAvailabilityResponse";
+import { ClickAndCollectLocation } from "../types/ClickAndCollectLocation";
+import { InStoreLocation } from "../types/InStoreLocation";
 
 const availabilityRequestUrl = "/api/getProductAvailability";
 
@@ -18,11 +21,11 @@ export const ProductSearch = (props: ProductSearchProps) => {
 
     const {currentLocation, onProductAvailabilityFetched} = props;
 
-    const combineCandCAndInStoreInfo = (data: any) => {
+    const combineCandCAndInStoreInfo = (data: ProductAvailabilityResponse) => {
         console.log(JSON.stringify(data));
         const result: StockLocation[] = [];
-        data.clickAndCollect.forEach((cAndCLocation: any) => {
-            const matchingInStoreLocations = data.inStore.filter((inStoreLocation: any) => cAndCLocation.locationId == inStoreLocation.locationId);
+        data.clickAndCollect.forEach((cAndCLocation: ClickAndCollectLocation) => {
+            const matchingInStoreLocations = data.inStore.filter((inStoreLocation: InStoreLocation) => cAndCLocation.locationId == inStoreLocation.locationId.toString());
             console.log(matchingInStoreLocations);
             result.push(matchingInStoreLocations.length > 0 ? {...cAndCLocation, inStoreStockLevel: matchingInStoreLocations[0].stockLevel} : cAndCLocation);
         })

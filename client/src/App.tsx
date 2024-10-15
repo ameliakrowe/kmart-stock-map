@@ -4,7 +4,7 @@ import { LocationModal } from './components/LocationModal';
 import { MapDisplay } from './components/MapDisplay';
 import { Result } from './types/Result';
 import { ProductSearch } from './components/ProductSearch';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StockLocation } from "./types/StockLocation";
 
 function App() {

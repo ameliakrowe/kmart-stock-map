@@ -1,10 +1,10 @@
 import { InfoWindow, AdvancedMarker, useAdvancedMarkerRef } from "@vis.gl/react-google-maps";
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StockLocation } from "../types/StockLocation";
 
 type MarkerWithInfoWindowProps = {
     location: StockLocation,
-    position: any
+    position: google.maps.LatLngLiteral
 }
 
 export const MarkerWithInfoWindow = (props: MarkerWithInfoWindowProps) => {

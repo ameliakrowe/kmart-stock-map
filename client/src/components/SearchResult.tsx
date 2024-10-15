@@ -1,6 +1,7 @@
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Result } from "../types/Result";
+import React from 'react';
 
 type SearchResultProps = {
     suburbResult: Result,

@@ -1,4 +1,5 @@
 import TextField from "@mui/material/TextField";
+import React from 'react';
 
 type SearchBarProps = {
     onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void

@@ -2,7 +2,7 @@ import { SearchBar } from './SearchBar';
 import { SearchResults } from './SearchResults';
 import { Result } from '../types/Result';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const requestUrl = "/api/getPostcodeSuggestions";
@@ -28,8 +28,9 @@ export const SearchArea = (props: SearchAreaProps) => {
                         query: searchInput
                     }
                 });
-                setSearchResults(response.data.data.postcodeQuery.map((item: any) => item as Result));
+                setSearchResults(response.data.data.postcodeQuery as Result[]);
             } catch (err) {
+                console.log(err);
                 setSearchResults([]);
             }
         };

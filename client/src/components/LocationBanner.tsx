@@ -1,4 +1,5 @@
 import { Result } from '../types/Result';
+import React from 'react';
 
 type LocationBannerProps = {
     selectedLocation: Result,
@@ -7,6 +8,7 @@ type LocationBannerProps = {
 
 export const LocationBanner = (props: LocationBannerProps) => {
     const { suburb } = props.selectedLocation;
+
 
     return (
         <div className="location-banner">

@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import { SearchArea } from './SearchArea';
 import { Result } from '../types/Result';
+import React from 'react';
 
 type LocationModalProps = {
     isOpen: boolean
