@@ -9,12 +9,12 @@ import { StockLocation } from "./types/StockLocation";
 
 function App() {
   const [currentLocation, setCurrentLocation] = useState<Result>({
-    suburb: "",
-    postcode: "",
-    state: "",
+    suburb: "SYDNEY",
+    postcode: "2000",
+    state: "NSW",
     location: {
-      lat: 0,
-      lon: 0
+      lat: -33.8697,
+      lon: 151.2099
     }
   });
   const [availableProductLocations, setAvailableProductLocations] = useState<StockLocation[]>([]);
