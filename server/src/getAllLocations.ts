@@ -101,8 +101,6 @@ export async function getAllLocations() {
     console.log(getNumberOfLocationsToSearch(searchCoords));
 
     while (getNumberOfLocationsToSearch(searchCoords) > 0) {
-        const fs = require("fs");
-
         //const fileName = Date.now().toString();
         /*fs.writeFile(fileName, searchCoords.map((coord) => `${coord.coord.lat} ${coord.coord.lon} ${coord.needToSearch}`).join("\n"), (err: any) => {
             if (err) {
@@ -128,6 +126,14 @@ export async function getAllLocations() {
             }
         });
     }
+
+    const fs = require("fs");
+
+    fs.writeFile("locations.json", JSON.stringify(locations, null, 4), (err: any) => {
+        if (err) {
+            console.error(err);
+        }
+    });
 
     const endTime = Date.now();
     return {
