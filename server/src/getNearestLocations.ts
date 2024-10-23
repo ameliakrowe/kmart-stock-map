@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const kmartAPIUrl = "https://api.kmart.com.au/gateway/graphql";
+import { KMART_API_URL } from './constants';
 
 export async function getNearestLocations(lat: string, lon: string, distance: string) {
     const apiQuery = `
@@ -22,7 +21,7 @@ export async function getNearestLocations(lat: string, lon: string, distance: st
     };
 
     try {
-        const response = await axios.post(kmartAPIUrl, {
+        const response = await axios.post(KMART_API_URL, {
             query: apiQuery,
             operationName: "getNearestLocations",
             variables

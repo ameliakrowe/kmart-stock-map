@@ -30,9 +30,10 @@ app.get("/api/getProductAvailability", async (req: Request, res: Response) => {
     const postcode = req.query.postcode as string;
     const lat = req.query.lat as string;
     const lon = req.query.lon as string;
+    const searchRadius = Number(req.query.searchRadius as string);
 
     try {
-        const result = await getProductAvailability(productSKU, postcode, lat, lon);
+        const result = await getProductAvailability(productSKU, postcode, lat, lon, searchRadius);
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
