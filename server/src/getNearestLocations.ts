@@ -30,7 +30,9 @@ export async function getNearestLocations(lat: string, lon: string, distance: st
                 'Content-Type': 'application/json'
             }
         });
-        return response.data.data;
+        return response.data.data.nearestLocations ? response.data.data : {
+            "nearestLocations": []
+        };
     } catch (error) {
         console.error("Error fetching data from GraphQL API:", error);
         throw new Error("Failed to fetch data");

@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 
+import { getAllLocations } from './src/getAllLocations';
 import { getNearestLocations } from './src/getNearestLocations';
 import { getPostcodeSuggestions } from './src/getPostcodeSuggestions';
 import { getProductAvailability } from './src/getProductAvailability';
@@ -55,6 +56,19 @@ app.get("/api/getNearestLocations", async (req: Request, res: Response) => {
         res.status(500).json({
             success: false,
             message: "Failed to get nearest locations"
+        });
+    }
+});
+
+app.get("/api/getAllLocations", async (req: Request, res: Response) => {
+    try {
+        const result = await getAllLocations();
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to get all locations"
         });
     }
 });
