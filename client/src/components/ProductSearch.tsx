@@ -13,13 +13,14 @@ const availabilityRequestUrl = "/api/getProductAvailability";
 
 type ProductSearchProps = {
     currentLocation: Result,
-    onProductAvailabilityFetched: (locations: StockLocation[]) => void
+    onProductAvailabilityFetched: (locations: StockLocation[]) => void,
+    searchRadius: number
 }
 
 export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
 
-    const {currentLocation, onProductAvailabilityFetched} = props;
+    const {currentLocation, onProductAvailabilityFetched, searchRadius} = props;
 
     const combineCandCAndInStoreInfo = (data: ProductAvailabilityResponse) => {
         console.log(JSON.stringify(data));
@@ -40,7 +41,8 @@ export const ProductSearch = (props: ProductSearchProps) => {
                     productSKU: productID,
                     postcode: currentLocation.postcode,
                     lat: currentLocation.location.lat,
-                    lon: currentLocation.location.lon
+                    lon: currentLocation.location.lon,
+                    searchRadius
                 }
             });
             //console.log(response);

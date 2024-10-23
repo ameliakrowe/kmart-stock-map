@@ -31,7 +31,7 @@ function App() {
         </p>
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
-      <ProductSearch currentLocation={currentLocation} onProductAvailabilityFetched={setAvailableProductLocations}/>
+      <ProductSearch currentLocation={currentLocation} onProductAvailabilityFetched={setAvailableProductLocations} searchRadius={searchRadius}/>
       <SearchRadius onChange={setSearchRadius} value={searchRadius}/>
       <MapDisplay centerLocation={currentLocation.location} stockLocations={availableProductLocations}/>
     </div>
