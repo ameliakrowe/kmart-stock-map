@@ -4,6 +4,7 @@ import { LocationModal } from './components/LocationModal';
 import { MapDisplay } from './components/MapDisplay';
 import { Result } from './types/Result';
 import { ProductSearch } from './components/ProductSearch';
+import { SearchRadius } from './components/SearchRadius';
 import React, { useState } from 'react';
 import { StockLocation } from "./types/StockLocation";
 
@@ -19,6 +20,7 @@ function App() {
   });
   const [availableProductLocations, setAvailableProductLocations] = useState<StockLocation[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [searchRadius, setSearchRadius] = useState<number>(25);
 
   return (
     <div className="App">
@@ -30,6 +32,7 @@ function App() {
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
       <ProductSearch currentLocation={currentLocation} onProductAvailabilityFetched={setAvailableProductLocations}/>
+      <SearchRadius onChange={setSearchRadius} value={searchRadius}/>
       <MapDisplay centerLocation={currentLocation.location} stockLocations={availableProductLocations}/>
     </div>
   );

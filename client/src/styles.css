@@ -48,3 +48,10 @@
   justify-content: center;
   gap: 5px;
 }
+
+.search-radius {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-top: 10px;
+}
