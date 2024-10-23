@@ -10,6 +10,7 @@ export async function getNearestLocations(lat: string, lon: string, distance: st
                 publicName
                 latitude
                 longitude
+                postcode
             }
         }
     `;

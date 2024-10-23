@@ -48,7 +48,7 @@ async function getFullLocationsFromResponseLocations(locations: ResponseLocation
     }
 }
 
-export async function getProductAvailability(productSKU: string, postcode: string, lat: string, lon: string) {
+export async function getProductAvailability(productSKU: string, postcode: string, lat: string, lon: string, searchRadius?: number) {
     const clickAndCollectApiQuery = `
         query getProductAvailability($input: ProductAvailabilityQueryInput!) {
             getProductAvailability(input: $input) {
