@@ -8,12 +8,11 @@ const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
 
 type MapDisplayProps = {
     centerLocation: Coords,
-    isSearchPending: boolean,
     stockLocations: StockLocation[]
 }
 
 export const MapDisplay = (props: MapDisplayProps) => {
-    const { centerLocation, isSearchPending, stockLocations } = props;
+    const { centerLocation, stockLocations } = props;
     const { lat, lon } = centerLocation;
 
     const [ mapCenter, setMapCenter ] = useState<google.maps.LatLngLiteral>({lat, lng: lon});
@@ -35,7 +34,7 @@ export const MapDisplay = (props: MapDisplayProps) => {
                     mapId={"dbe7c4267f83fb4e"}
                     onCenterChanged={(map) => setMapCenter(map.detail.center)}
                 >
-                    {!isSearchPending && stockLocations.map((location: StockLocation) => (
+                    {stockLocations.map((location: StockLocation) => (
                         <MarkerWithInfoWindow key={location.locationId} location={location} position={{lat: Number(location.lat), lng: Number(location.lon)}}/>
                     ))}
                 </Map>

@@ -23,6 +23,11 @@ function App() {
   const [searchRadius, setSearchRadius] = useState<number>(25);
   const [searchPending, setSearchPending] = useState<boolean>(false);
 
+  function handleSearchStarted(): void {
+    setSearchPending(true);
+    setAvailableProductLocations([]);
+  }
+
   return (
     <div className="App">
       <LocationBanner selectedLocation={currentLocation} handleOpenModal={() => setModalIsOpen(true)}/>
@@ -33,9 +38,9 @@ function App() {
       </header>
       <LocationModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} handleSearchResultClick={setCurrentLocation}/>
       <ProductSearch currentLocation={currentLocation} isSearchPending={searchPending} onProductAvailabilityFetched={setAvailableProductLocations}
-        searchRadius={searchRadius} onSearchStarted={() => setSearchPending(true)} onSearchFinished={() => setSearchPending(false)}/>
+        searchRadius={searchRadius} onSearchStarted={handleSearchStarted} onSearchFinished={() => setSearchPending(false)}/>
       <SearchRadius onChange={setSearchRadius} value={searchRadius}/>
-      <MapDisplay centerLocation={currentLocation.location} isSearchPending={searchPending} stockLocations={availableProductLocations}/>
+      <MapDisplay centerLocation={currentLocation.location} stockLocations={availableProductLocations}/>
     </div>
   );
 }
