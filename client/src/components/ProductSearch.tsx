@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { StockLocation } from "../types/StockLocation";
 import { Result } from '../types/Result';
+import CircularProgress from '@mui/material/CircularProgress';
 import { ProductAvailabilityResponse } from "../types/ProductAvailabilityResponse";
 import { ClickAndCollectLocation } from "../types/ClickAndCollectLocation";
 import { InStoreLocation } from "../types/InStoreLocation";
@@ -19,6 +20,7 @@ type ProductSearchProps = {
 
 export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
+    const [searchPending, setSearchPending] = useState<boolean>(false);
 
     const {currentLocation, onProductAvailabilityFetched, searchRadius} = props;
 
@@ -30,12 +32,12 @@ export const ProductSearch = (props: ProductSearchProps) => {
             console.log(matchingInStoreLocations);
             result.push(matchingInStoreLocations.length > 0 ? {...cAndCLocation, inStoreStockLevel: matchingInStoreLocations[0].stockLevel} : cAndCLocation);
         })
-        console.log(result);
         return result;
     }
 
     const fetchProductAvailability = async (productID: string) => {        
         try {
+            setSearchPending(true);
             const response = await axios.get(availabilityRequestUrl, {
                 params: {
                     productSKU: productID,
@@ -45,11 +47,11 @@ export const ProductSearch = (props: ProductSearchProps) => {
                     searchRadius
                 }
             });
-            //console.log(response);
             onProductAvailabilityFetched(combineCandCAndInStoreInfo(response.data))
         } catch (err) {
             console.log(err);
         }
+        setSearchPending(false);
     };
 
     return (
@@ -58,9 +60,8 @@ export const ProductSearch = (props: ProductSearchProps) => {
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
                 value={searchInput}
             />
-            <IconButton color="primary" onClick={() => fetchProductAvailability(searchInput)}>
-                <SearchIcon />
-            </IconButton>
+            {searchPending ? <div className="progress-spinner"><CircularProgress size="20px"/></div>
+            : <IconButton color="primary" onClick={() => fetchProductAvailability(searchInput)}><SearchIcon /></IconButton>}
         </div>   
     )
 };

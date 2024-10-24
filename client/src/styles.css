@@ -55,3 +55,8 @@
   gap: 20px;
   padding-top: 10px;
 }
+
+.progress-spinner {
+  padding-left: 10px;
+  padding-top: 15px;
+}
