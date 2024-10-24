@@ -5,7 +5,7 @@ import { MapDisplay } from './components/MapDisplay';
 import { Result } from './types/Result';
 import { ProductSearch } from './components/ProductSearch';
 import { SearchRadius } from './components/SearchRadius';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { StockLocation } from "./types/StockLocation";
 
@@ -24,12 +24,21 @@ function App() {
   const [availableProductLocations, setAvailableProductLocations] = useState<StockLocation[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [searchRadius, setSearchRadius] = useState<number>(25);
+  const [mapSearchRadius, setMapSearchRadius] = useState<number>(25);
   const [searchPending, setSearchPending] = useState<boolean>(false);
 
   function handleSearchStarted(): void {
     setSearchPending(true);
     setAvailableProductLocations([]);
   }
+
+  useEffect(() => {
+    const debounceSetMapSearchRadius = setTimeout(() => {
+        setMapSearchRadius(searchRadius);
+    }, 750);
+
+    return () => clearTimeout(debounceSetMapSearchRadius); 
+  }, [searchRadius]);
 
   return (
     <div className="App">
@@ -44,7 +53,7 @@ function App() {
         searchRadius={searchRadius} onSearchStarted={handleSearchStarted} onSearchFinished={() => setSearchPending(false)}/>
       <SearchRadius onChange={setSearchRadius} value={searchRadius}/>
       <APIProvider apiKey={apiKey} onLoad={() => console.log("Maps API loaded")}>
-        <MapDisplay centerLocation={currentLocation.location} searchRadius={searchRadius} stockLocations={availableProductLocations}/>
+        <MapDisplay centerLocation={currentLocation.location} searchRadius={mapSearchRadius} stockLocations={availableProductLocations}/>
       </APIProvider>
     </div>
   );
