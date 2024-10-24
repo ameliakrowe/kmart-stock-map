@@ -15,14 +15,16 @@ const availabilityRequestUrl = "/api/getProductAvailability";
 type ProductSearchProps = {
     currentLocation: Result,
     onProductAvailabilityFetched: (locations: StockLocation[]) => void,
-    searchRadius: number
+    onSearchStarted: () => void,
+    onSearchFinished: () => void,
+    searchRadius: number,
+    isSearchPending: boolean
 }
 
 export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
-    const [searchPending, setSearchPending] = useState<boolean>(false);
 
-    const {currentLocation, onProductAvailabilityFetched, searchRadius} = props;
+    const {currentLocation, onProductAvailabilityFetched, searchRadius, isSearchPending, onSearchStarted, onSearchFinished} = props;
 
     const combineCandCAndInStoreInfo = (data: ProductAvailabilityResponse) => {
         console.log(JSON.stringify(data));
@@ -37,7 +39,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
 
     const fetchProductAvailability = async (productID: string) => {        
         try {
-            setSearchPending(true);
+            onSearchStarted();
             const response = await axios.get(availabilityRequestUrl, {
                 params: {
                     productSKU: productID,
@@ -51,7 +53,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
         } catch (err) {
             console.log(err);
         }
-        setSearchPending(false);
+        onSearchFinished();
     };
 
     return (
@@ -60,7 +62,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
                 value={searchInput}
             />
-            {searchPending ? <div className="progress-spinner"><CircularProgress size="20px"/></div>
+            {isSearchPending ? <div className="progress-spinner"><CircularProgress size="20px"/></div>
             : <IconButton color="primary" onClick={() => fetchProductAvailability(searchInput)}><SearchIcon /></IconButton>}
         </div>   
     )
