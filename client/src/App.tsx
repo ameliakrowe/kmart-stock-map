@@ -6,7 +6,10 @@ import { Result } from './types/Result';
 import { ProductSearch } from './components/ProductSearch';
 import { SearchRadius } from './components/SearchRadius';
 import React, { useState } from 'react';
+import { APIProvider } from "@vis.gl/react-google-maps";
 import { StockLocation } from "./types/StockLocation";
+
+const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
 
 function App() {
   const [currentLocation, setCurrentLocation] = useState<Result>({
@@ -40,7 +43,9 @@ function App() {
       <ProductSearch currentLocation={currentLocation} isSearchPending={searchPending} onProductAvailabilityFetched={setAvailableProductLocations}
         searchRadius={searchRadius} onSearchStarted={handleSearchStarted} onSearchFinished={() => setSearchPending(false)}/>
       <SearchRadius onChange={setSearchRadius} value={searchRadius}/>
-      <MapDisplay centerLocation={currentLocation.location} stockLocations={availableProductLocations}/>
+      <APIProvider apiKey={apiKey} onLoad={() => console.log("Maps API loaded")}>
+        <MapDisplay centerLocation={currentLocation.location} searchRadius={searchRadius} stockLocations={availableProductLocations}/>
+      </APIProvider>
     </div>
   );
 }

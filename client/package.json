@@ -22,6 +22,7 @@
     "@types/react-dom": "^18.3.0",
     "@vis.gl/react-google-maps": "^1.3.0",
     "axios": "^1.7.7",
+    "geolib": "^3.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
