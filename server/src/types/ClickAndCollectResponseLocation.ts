@@ -1,4 +1,4 @@
-export type ResponseLocation = {
+export type ClickAndCollectResponseLocation = {
     fulfilment: {
         isBuddyLocation: boolean,
         locationId: string,
