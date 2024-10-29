@@ -11,6 +11,7 @@ export const SearchBar = (props: SearchBarProps) => {
         <TextField
             className="Search-bar"
             id="outlined-basic"
+            label="Enter product SKU (8 digits)"
             onInput={props.onInput}
             variant="outlined"
             value={props.value}
