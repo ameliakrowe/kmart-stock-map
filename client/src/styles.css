@@ -43,10 +43,15 @@
   margin-bottom: 20px;
 }
 
+.clear-button {
+  display: flex;
+  justify-content: center;
+  padding-left: 5px;
+}
+
 .stock-search {
   display: flex;
   justify-content: center;
-  gap: 5px;
 }
 
 .search-radius {

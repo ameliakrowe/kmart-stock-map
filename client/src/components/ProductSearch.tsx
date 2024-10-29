@@ -6,6 +6,7 @@ import axios from 'axios';
 import { StockLocation } from "../types/StockLocation";
 import { Result } from '../types/Result';
 import CircularProgress from '@mui/material/CircularProgress';
+import ClearIcon from '@mui/icons-material/Clear';
 import { ProductAvailabilityResponse } from "../types/ProductAvailabilityResponse";
 import { ClickAndCollectLocation } from "../types/ClickAndCollectLocation";
 import { InStoreLocation } from "../types/InStoreLocation";
@@ -62,6 +63,11 @@ export const ProductSearch = (props: ProductSearchProps) => {
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
                 value={searchInput}
             />
+            <div className="clear-button">
+                <IconButton onClick={() => setSearchInput("")}>
+                    <ClearIcon />
+                </IconButton>
+            </div>
             {isSearchPending ? <div className="progress-spinner"><CircularProgress size="20px"/></div>
             : <IconButton color="primary" onClick={() => fetchProductAvailability(searchInput)}><SearchIcon /></IconButton>}
         </div>   
