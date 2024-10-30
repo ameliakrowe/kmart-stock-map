@@ -1,7 +1,7 @@
 import { Result } from "../types/Result";
 import { SearchResult } from "./SearchResult";
 import List from "@mui/material/List";
-import React from "react";
+import React, { useState } from "react";
 
 type SearchResultsProps = {
     results: Result[];
@@ -9,15 +9,19 @@ type SearchResultsProps = {
 };
 
 export const SearchResults = (props: SearchResultsProps) => {
+    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     return (
         <List>
-            {props.results.map((result) => (
+            {props.results.map((result, index) => (
                 <SearchResult
+                    index={index}
+                    isSelected={selectedIndex === index}
                     key={result.postcode}
                     suburbResult={result}
-                    onClick={(suburb: Result) =>
-                        props.handleSearchResultClick(suburb)
-                    }
+                    onClick={(index: number, suburb: Result) => {
+                        setSelectedIndex(index);
+                        props.handleSearchResultClick(suburb);
+                    }}
                 />
             ))}
         </List>

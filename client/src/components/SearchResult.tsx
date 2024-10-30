@@ -4,17 +4,20 @@ import { Result } from "../types/Result";
 import React from "react";
 
 type SearchResultProps = {
+    index: number;
+    isSelected: boolean;
     suburbResult: Result;
-    onClick: (suburb: Result) => void;
+    onClick: (index: number, suburb: Result) => void;
 };
 
 export const SearchResult = (props: SearchResultProps) => {
+    const { index, isSelected, suburbResult, onClick } = props;
     const handleClick = () => {
-        props.onClick(props.suburbResult);
+        onClick(index, suburbResult);
     };
-    const { suburb, state, postcode } = props.suburbResult;
+    const { suburb, state, postcode } = suburbResult;
     return (
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClick} selected={isSelected}>
             <ListItemText primary={suburb + ", " + state + ", " + postcode} />
         </ListItemButton>
     );
