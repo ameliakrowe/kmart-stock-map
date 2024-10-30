@@ -1,67 +1,67 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-header {
-  background-color: white;
-  /*min-height: 100vh;*/
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
+    background-color: white;
+    /*min-height: 100vh;*/
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: black;
 }
 
 .location-banner {
-  background-color: rgb(33, 111, 86);
-  color: white;
-  display: flex;
-  height: 50px;
-  justify-content: center;
-  align-items: center;
+    background-color: rgb(33, 111, 86);
+    color: white;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 .location-select {
-  color: white;
+    color: white;
 }
 
 .map-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
 }
 
 .Map-display {
-  width: 750px;
-  height: 600px;
+    width: 750px;
+    height: 600px;
 }
 
 .Search-bar {
-  width: 400px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+    width: 400px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .clear-button {
-  display: flex;
-  justify-content: center;
-  padding-left: 5px;
+    display: flex;
+    justify-content: center;
+    padding-left: 5px;
 }
 
 .stock-search {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .search-radius {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 10px;
 }
 
 .progress-spinner {
-  padding-left: 10px;
-  padding-top: 15px;
+    padding-left: 10px;
+    padding-top: 15px;
 }

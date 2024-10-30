@@ -1,15 +1,15 @@
-import { SearchBar } from './SearchBar';
-import { SearchResults } from './SearchResults';
-import { Result } from '../types/Result';
+import { SearchBar } from "./SearchBar";
+import { SearchResults } from "./SearchResults";
+import { Result } from "../types/Result";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const requestUrl = "/api/getPostcodeSuggestions";
 
 type SearchAreaProps = {
-    handleSearchResultClick: (suburb: Result) => void
-}
+    handleSearchResultClick: (suburb: Result) => void;
+};
 
 export const SearchArea = (props: SearchAreaProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
@@ -21,12 +21,12 @@ export const SearchArea = (props: SearchAreaProps) => {
                 setSearchResults([]);
                 return;
             }
-            
+
             try {
                 const response = await axios.get(requestUrl, {
                     params: {
-                        query: searchInput
-                    }
+                        query: searchInput,
+                    },
                 });
                 setSearchResults(response.data.data.postcodeQuery as Result[]);
             } catch (err) {
@@ -40,16 +40,22 @@ export const SearchArea = (props: SearchAreaProps) => {
         }, 300);
 
         return () => clearTimeout(debounceFetch);
-        
     }, [searchInput]);
 
     return (
         <>
             <SearchBar
-                onInput={(e: React.ChangeEvent<HTMLInputElement>) => setSearchInput(e.target.value)}
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSearchInput(e.target.value)
+                }
                 value={searchInput}
             />
-            <SearchResults results={searchResults} handleSearchResultClick={(suburb: Result) => props.handleSearchResultClick(suburb)}/>
-        </>        
-    )
+            <SearchResults
+                results={searchResults}
+                handleSearchResultClick={(suburb: Result) =>
+                    props.handleSearchResultClick(suburb)
+                }
+            />
+        </>
+    );
 };

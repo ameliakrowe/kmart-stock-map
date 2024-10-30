@@ -1,10 +1,10 @@
 import TextField from "@mui/material/TextField";
-import React from 'react';
+import React from "react";
 
 type SearchBarProps = {
-    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    value: string
-}
+    onInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
+};
 
 export const SearchBar = (props: SearchBarProps) => {
     return (
@@ -16,5 +16,5 @@ export const SearchBar = (props: SearchBarProps) => {
             variant="outlined"
             value={props.value}
         />
-    )
+    );
 };

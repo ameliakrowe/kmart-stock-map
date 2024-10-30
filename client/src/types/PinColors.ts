@@ -1,4 +1,4 @@
 export type PinColors = {
-    backgroundColor: string,
-    borderColor: string
-}
+    backgroundColor: string;
+    borderColor: string;
+};

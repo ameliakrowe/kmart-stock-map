@@ -1,12 +1,12 @@
-import React from 'react';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import Input from '@mui/material/Input';
+import React from "react";
+import Typography from "@mui/material/Typography";
+import Slider from "@mui/material/Slider";
+import Input from "@mui/material/Input";
 
 type SearchRadiusProps = {
-    onChange: (newValue: number) => void
-    value: number
-}
+    onChange: (newValue: number) => void;
+    value: number;
+};
 
 export const SearchRadius = (props: SearchRadiusProps) => {
     const { onChange, value } = props;
@@ -16,12 +16,12 @@ export const SearchRadius = (props: SearchRadiusProps) => {
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(event.target.value === '' ? 0 : Number(event.target.value));
-      };
+        onChange(event.target.value === "" ? 0 : Number(event.target.value));
+    };
 
     return (
         <div className="search-radius">
-            <Typography id="input-slider" sx={{paddingTop: 1}}>
+            <Typography id="input-slider" sx={{ paddingTop: 1 }}>
                 Search radius (km):
             </Typography>
             <Slider
@@ -29,7 +29,7 @@ export const SearchRadius = (props: SearchRadiusProps) => {
                 onChange={handleSliderChange}
                 min={5}
                 max={1000}
-                sx={{width: 300, paddingTop: 2.75}}
+                sx={{ width: 300, paddingTop: 2.75 }}
             />
             <Input
                 value={value}
@@ -39,9 +39,9 @@ export const SearchRadius = (props: SearchRadiusProps) => {
                     step: 10,
                     min: 5,
                     max: 1000,
-                    type: 'number'
+                    type: "number",
                 }}
             />
         </div>
-    )
+    );
 };
