@@ -1,5 +1,5 @@
-import { InStoreSearchInput } from "./InStoreSearchInput"
+import { InStoreSearchInput } from "./InStoreSearchInput";
 
 export type InStoreVariables = {
-    input: InStoreSearchInput
-}
+    input: InStoreSearchInput;
+};

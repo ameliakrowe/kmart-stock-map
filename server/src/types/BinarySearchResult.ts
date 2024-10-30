@@ -1,7 +1,7 @@
-import { NearestLocation } from "./NearestLocation"
+import { NearestLocation } from "./NearestLocation";
 
 export type BinarySearchResult = {
-    locations: NearestLocation[],
-    radiusToExcludeFromSearch: number,
-    numberOfCallsMade: number,
-}
+    locations: NearestLocation[];
+    radiusToExcludeFromSearch: number;
+    numberOfCallsMade: number;
+};

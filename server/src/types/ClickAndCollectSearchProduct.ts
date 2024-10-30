@@ -1,6 +1,6 @@
 export type ClickAndCollectSearchProduct = {
-    keycode: string,
-    quantity: number,
-    isNationalInventory: boolean,
-    isClickAndCollectOnly: boolean
-}
+    keycode: string;
+    quantity: number;
+    isNationalInventory: boolean;
+    isClickAndCollectOnly: boolean;
+};

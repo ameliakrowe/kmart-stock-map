@@ -1,5 +1,5 @@
 export type InStoreResponseLocation = {
-    locationName: string,
-    locationId: number,
-    stockLevel: string
-}
+    locationName: string;
+    locationId: number;
+    stockLevel: string;
+};

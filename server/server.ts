@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
 
-import { getAllLocations } from './src/getAllLocations';
-import { getNearestLocations } from './src/getNearestLocations';
-import { getPostcodeSuggestions } from './src/getPostcodeSuggestions';
-import { getProductAvailability } from './src/getProductAvailability';
+import { getAllLocations } from "./src/getAllLocations";
+import { getNearestLocations } from "./src/getNearestLocations";
+import { getPostcodeSuggestions } from "./src/getPostcodeSuggestions";
+import { getProductAvailability } from "./src/getProductAvailability";
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.get("/api/getPostcodeSuggestions", async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "Failed to get postcode suggestions"
+            message: "Failed to get postcode suggestions",
         });
     }
 });
@@ -33,13 +33,19 @@ app.get("/api/getProductAvailability", async (req: Request, res: Response) => {
     const searchRadius = Number(req.query.searchRadius as string);
 
     try {
-        const result = await getProductAvailability(productSKU, postcode, lat, lon, searchRadius);
+        const result = await getProductAvailability(
+            productSKU,
+            postcode,
+            lat,
+            lon,
+            searchRadius,
+        );
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "Failed to get product availability"
+            message: "Failed to get product availability",
         });
     }
 });
@@ -56,7 +62,7 @@ app.get("/api/getNearestLocations", async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "Failed to get nearest locations"
+            message: "Failed to get nearest locations",
         });
     }
 });
@@ -69,9 +75,11 @@ app.get("/api/getAllLocations", async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "Failed to get all locations"
+            message: "Failed to get all locations",
         });
     }
 });
 
-app.listen(5000, () => {console.log("server running")});
+app.listen(5000, () => {
+    console.log("server running");
+});

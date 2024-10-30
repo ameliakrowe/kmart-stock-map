@@ -1,12 +1,12 @@
 export type ClickAndCollectResponseLocation = {
     fulfilment: {
-        isBuddyLocation: boolean,
-        locationId: string,
+        isBuddyLocation: boolean;
+        locationId: string;
         stock: {
-            available: number
-        }
-    },
+            available: number;
+        };
+    };
     location: {
-        locationId: string
-    }
-}
+        locationId: string;
+    };
+};
