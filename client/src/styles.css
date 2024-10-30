@@ -61,6 +61,15 @@
     padding-top: 10px;
 }
 
+.location-modal-close-button {
+    padding-top: 8px;
+}
+
+.location-modal-top-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
 .progress-spinner {
     padding-left: 10px;
     padding-top: 15px;
