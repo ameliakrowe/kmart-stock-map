@@ -18,14 +18,17 @@ const style = {
     width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
+    paddingLeft: "24px",
+    paddingRight: "24px",
+    paddingTop: "12px",
+    paddingBottom: "12px",
 };
 
 export const LocationModal = (props: LocationModalProps) => {
     return (
         <Modal open={props.isOpen} onClose={props.onClose}>
             <Box sx={style}>
-                <b>Select a location</b>
+                <p className="location-select-text">Select a location</p>
                 <SearchArea
                     handleSearchResultClick={props.handleSearchResultClick}
                 />
