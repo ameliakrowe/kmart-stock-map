@@ -54,7 +54,7 @@ function App() {
             <LocationModal
                 isOpen={modalIsOpen}
                 onClose={() => setModalIsOpen(false)}
-                handleSearchResultClick={setCurrentLocation}
+                onSetLocation={setCurrentLocation}
             />
             <ProductSearch
                 currentLocation={currentLocation}

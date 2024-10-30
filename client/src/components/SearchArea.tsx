@@ -8,12 +8,13 @@ import axios from "axios";
 const requestUrl = "/api/getPostcodeSuggestions";
 
 type SearchAreaProps = {
-    handleSearchResultClick: (suburb: Result) => void;
+    onSearchResultClick: (suburb: Result) => void;
 };
 
 export const SearchArea = (props: SearchAreaProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Result[]>([]);
+    const { onSearchResultClick } = props;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,7 +55,7 @@ export const SearchArea = (props: SearchAreaProps) => {
             <SearchResults
                 results={searchResults}
                 handleSearchResultClick={(suburb: Result) =>
-                    props.handleSearchResultClick(suburb)
+                    onSearchResultClick(suburb)
                 }
             />
         </>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { SearchArea } from "./SearchArea";
@@ -6,12 +7,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type LocationModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    handleSearchResultClick: (suburb: Result) => void;
+    onSetLocation: (suburb: Result) => void;
 };
 
 const style = {
@@ -38,7 +39,20 @@ const SetLocationButton = styled(Button)({
 });
 
 export const LocationModal = (props: LocationModalProps) => {
-    const { isOpen, onClose, handleSearchResultClick } = props;
+    const [selectedResult, setSelectedResult] = useState<Result | undefined>(
+        undefined,
+    );
+    const { isOpen, onClose, onSetLocation } = props;
+
+    const handleButtonClick = () => {
+        selectedResult && onSetLocation(selectedResult);
+        onClose();
+    };
+
+    useEffect(() => {
+        !isOpen && setSelectedResult(undefined);
+    }, [isOpen]);
+
     return (
         <Modal open={isOpen} onClose={onClose}>
             <Box sx={style}>
@@ -50,9 +64,13 @@ export const LocationModal = (props: LocationModalProps) => {
                         </IconButton>
                     </div>
                 </div>
-                <SearchArea handleSearchResultClick={handleSearchResultClick} />
+                <SearchArea onSearchResultClick={setSelectedResult} />
                 <div className="location-modal-set-button-area">
-                    <SetLocationButton variant="contained">
+                    <SetLocationButton
+                        disabled={!selectedResult}
+                        onClick={handleButtonClick}
+                        variant="contained"
+                    >
                         Set as my location
                     </SetLocationButton>
                 </div>
