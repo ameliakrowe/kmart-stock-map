@@ -83,6 +83,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
     return (
         <div className="stock-search">
             <SearchBar
+                label={"Enter product SKU (8 digits)"}
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setSearchInput(e.target.value)
                 }

@@ -45,6 +45,7 @@ export const SearchArea = (props: SearchAreaProps) => {
     return (
         <>
             <SearchBar
+                label={"Enter suburb or postcode"}
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setSearchInput(e.target.value)
                 }
