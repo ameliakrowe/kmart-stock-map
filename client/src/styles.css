@@ -65,6 +65,13 @@
     padding-top: 8px;
 }
 
+.location-modal-set-button-area {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+}
+
 .location-modal-top-bar {
     display: flex;
     justify-content: space-between;
