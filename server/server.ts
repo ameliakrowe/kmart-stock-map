@@ -5,6 +5,7 @@ import { getAllLocations } from "./src/getAllLocations";
 import { getNearestLocations } from "./src/getNearestLocations";
 import { getPostcodeSuggestions } from "./src/getPostcodeSuggestions";
 import { getProductAvailability } from "./src/getProductAvailability";
+import { AxiosError } from "axios";
 
 const app = express();
 
@@ -42,10 +43,10 @@ app.get("/api/getProductAvailability", async (req: Request, res: Response) => {
         );
         res.status(200).json(result);
     } catch (error) {
-        console.log(error);
+        const axiosError = error as AxiosError;
         res.status(500).json({
             success: false,
-            message: "Failed to get product availability",
+            message: axiosError.message,
         });
     }
 });

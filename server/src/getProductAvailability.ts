@@ -13,6 +13,7 @@ import {
     KMART_API_URL,
 } from "./constants";
 import { InStoreVariables } from "./types/InStoreVariables";
+import { AxiosError } from "axios";
 
 const allLocations = locationData.locations as NearestLocation[];
 
@@ -260,6 +261,12 @@ export async function getProductAvailability(
                 },
             );
 
+            if (inStoreResponse.data.data.findInStoreQuery.length < 1) {
+                throw new Error(
+                    "No product found for the specified SKU. Please check input and try again.",
+                );
+            }
+
             const inStoreLocations = inStoreResponse.data.data
                 .findInStoreQuery[0].inventory as InStoreResponseLocation[];
             const locationIdsFound = inStoreLocations.map((location) =>
@@ -276,8 +283,9 @@ export async function getProductAvailability(
                 locationsWithinRadius,
             );
         } catch (error) {
+            const axiosError = error as AxiosError;
             console.error("Error getting product availability", error);
-            throw new Error("Failed to fetch data");
+            throw new Error(axiosError.message);
         }
     }
 
