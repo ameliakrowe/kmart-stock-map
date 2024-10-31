@@ -24,6 +24,9 @@ type ProductSearchProps = {
 
 export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
+    const [error, setError] = useState<string | null>(null);
+
+    const isInputValid = !error && searchInput.length !== 0;
 
     const {
         currentLocation,
@@ -80,13 +83,34 @@ export const ProductSearch = (props: ProductSearchProps) => {
         onSearchFinished();
     };
 
+    const isOnlyDigits = (input: string) => {
+        const regex = /^\d+$/;
+        return regex.test(input);
+    };
+
+    const validateInput = (value: string) => {
+        if (value.length != 8) {
+            return "Input must be 8 characters";
+        } else if (!isOnlyDigits(value)) {
+            return "Input must only contain numbers";
+        }
+        return null;
+    };
+
+    const handleSearchInputChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const { value } = e.target;
+        setSearchInput(value);
+        setError(validateInput(value));
+    };
+
     return (
         <div className="stock-search">
             <SearchBar
+                errorText={error}
                 label={"Enter product SKU (8 digits)"}
-                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSearchInput(e.target.value)
-                }
+                onInput={handleSearchInputChange}
                 value={searchInput}
             />
             <div className="clear-button">
@@ -101,6 +125,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
             ) : (
                 <IconButton
                     color="primary"
+                    disabled={!isInputValid}
                     onClick={() => fetchProductAvailability(searchInput)}
                 >
                     <SearchIcon />
