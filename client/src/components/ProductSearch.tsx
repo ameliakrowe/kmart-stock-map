@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { SearchBar } from "./SearchBar";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { StockLocation } from "../types/StockLocation";
 import { Result } from "../types/Result";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -10,12 +11,14 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { ProductAvailabilityResponse } from "../types/ProductAvailabilityResponse";
 import { ClickAndCollectLocation } from "../types/ClickAndCollectLocation";
 import { InStoreLocation } from "../types/InStoreLocation";
+import { ProductAvailabilityError } from "../types/ProductAvailabilityError";
 
 const availabilityRequestUrl = "/api/getProductAvailability";
 
 type ProductSearchProps = {
     currentLocation: Result;
     onProductAvailabilityFetched: (locations: StockLocation[]) => void;
+    onSearchError: (error: string) => void;
     onSearchStarted: () => void;
     onSearchFinished: () => void;
     searchRadius: number;
@@ -24,27 +27,27 @@ type ProductSearchProps = {
 
 export const ProductSearch = (props: ProductSearchProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
+    const [validationError, setValidationError] = useState<string | null>(null);
 
-    const isInputValid = !error && searchInput.length !== 0;
+    const isInputValid = !validationError && searchInput.length !== 0;
 
     const {
         currentLocation,
         onProductAvailabilityFetched,
         searchRadius,
         isSearchPending,
+        onSearchError,
         onSearchStarted,
         onSearchFinished,
     } = props;
 
     const combineCandCAndInStoreInfo = (data: ProductAvailabilityResponse) => {
-        console.log(JSON.stringify(data));
         const result: StockLocation[] = [];
         data.clickAndCollect.forEach(
             (cAndCLocation: ClickAndCollectLocation) => {
                 const matchingInStoreLocations = data.inStore.filter(
                     (inStoreLocation: InStoreLocation) =>
-                        cAndCLocation.locationId ==
+                        cAndCLocation.locationId ===
                         inStoreLocation.locationId.toString(),
                 );
                 console.log(matchingInStoreLocations);
@@ -78,7 +81,16 @@ export const ProductSearch = (props: ProductSearchProps) => {
                 combineCandCAndInStoreInfo(response.data),
             );
         } catch (err) {
-            console.log(err);
+            const axiosError = err as AxiosError;
+            console.log(axiosError);
+            if (axiosError.response) {
+                const productError = axiosError.response
+                    .data as ProductAvailabilityError;
+                console.log(productError);
+                onSearchError(productError.message);
+            } else {
+                onSearchError("Unknown error occurred fetching data");
+            }
         }
         onSearchFinished();
     };
@@ -89,7 +101,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
     };
 
     const validateInput = (value: string) => {
-        if (value.length != 8) {
+        if (value.length !== 8) {
             return "Input must be 8 characters";
         } else if (!isOnlyDigits(value)) {
             return "Input must only contain numbers";
@@ -102,13 +114,13 @@ export const ProductSearch = (props: ProductSearchProps) => {
     ) => {
         const { value } = e.target;
         setSearchInput(value);
-        setError(validateInput(value));
+        setValidationError(validateInput(value));
     };
 
     return (
         <div className="stock-search">
             <SearchBar
-                errorText={error}
+                errorText={validationError}
                 label={"Enter product SKU (8 digits)"}
                 onInput={handleSearchInputChange}
                 value={searchInput}

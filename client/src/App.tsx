@@ -8,6 +8,7 @@ import { SearchRadius } from "./components/SearchRadius";
 import React, { useEffect, useState } from "react";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { StockLocation } from "./types/StockLocation";
+import { SearchError } from "./components/SearchError";
 
 const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
 
@@ -28,10 +29,12 @@ function App() {
     const [searchRadius, setSearchRadius] = useState<number>(25);
     const [mapSearchRadius, setMapSearchRadius] = useState<number>(25);
     const [searchPending, setSearchPending] = useState<boolean>(false);
+    const [searchError, setSearchError] = useState<string | null>(null);
 
     function handleSearchStarted(): void {
         setSearchPending(true);
         setAvailableProductLocations([]);
+        setSearchError(null);
     }
 
     useEffect(() => {
@@ -61,10 +64,12 @@ function App() {
                 isSearchPending={searchPending}
                 onProductAvailabilityFetched={setAvailableProductLocations}
                 searchRadius={searchRadius}
+                onSearchError={setSearchError}
                 onSearchStarted={handleSearchStarted}
                 onSearchFinished={() => setSearchPending(false)}
             />
             <SearchRadius onChange={setSearchRadius} value={searchRadius} />
+            {!!searchError && <SearchError message={searchError} />}
             <APIProvider
                 apiKey={apiKey}
                 onLoad={() => console.log("Maps API loaded")}

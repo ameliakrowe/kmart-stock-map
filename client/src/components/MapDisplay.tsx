@@ -57,7 +57,6 @@ export const MapDisplay = (props: MapDisplayProps) => {
     const map = useMap();
 
     function fitBoundsToMap(bounds: google.maps.LatLngBoundsLiteral) {
-        console.log(bounds);
         if (!map) return;
 
         map.fitBounds(bounds);
