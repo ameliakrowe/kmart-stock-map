@@ -139,6 +139,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
                     color="primary"
                     disabled={!isInputValid}
                     onClick={() => fetchProductAvailability(searchInput)}
+                    sx={{ maxHeight: "56px" }}
                 >
                     <SearchIcon />
                 </IconButton>

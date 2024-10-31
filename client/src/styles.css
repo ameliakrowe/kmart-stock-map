@@ -44,9 +44,8 @@
 }
 
 .clear-button {
-    display: flex;
-    justify-content: center;
     padding-left: 5px;
+    padding-top: 8px;
 }
 
 .stock-search {
