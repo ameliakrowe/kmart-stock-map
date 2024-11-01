@@ -81,16 +81,24 @@ export const MarkerWithInfoWindow = (props: MarkerWithInfoWindowProps) => {
             {infoWindowShown && (
                 <InfoWindow
                     anchor={marker}
-                    headerContent={<b>{location.publicName}</b>}
+                    headerContent={
+                        <div className="info-window-header">
+                            <p className="info-window-header-text">
+                                {location.publicName}
+                            </p>
+                        </div>
+                    }
                     onClose={handleClose}
                 >
-                    <p>
-                        Quantity available for click and collect:{" "}
-                        {location.quantityAvailable}
-                    </p>
-                    {location.inStoreStockLevel && (
-                        <p>{generateInStoreStockText(location)}</p>
-                    )}
+                    <div className="info-window-body">
+                        <p>
+                            Quantity available for click and collect:{" "}
+                            {location.quantityAvailable}
+                        </p>
+                        {location.inStoreStockLevel && (
+                            <p>{generateInStoreStockText(location)}</p>
+                        )}
+                    </div>
                 </InfoWindow>
             )}
         </>

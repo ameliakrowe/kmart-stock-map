@@ -91,3 +91,28 @@
 .search-error {
     color: rgb(211, 47, 47);
 }
+
+.info-window-body {
+    text-align: left;
+}
+
+.info-window-header {
+    text-align: left;
+}
+
+.info-window-header-text {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.gm-style-iw-ch {
+    padding-top: 0px;
+}
+
+.gm-style-iw-chr {
+    max-height: 48px;
+}
+
+gm-ui-hover-effect {
+    padding-top: 8px !important;
+}
