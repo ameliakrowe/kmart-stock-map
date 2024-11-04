@@ -39,6 +39,9 @@ const generatePinColors = (location: StockLocation): PinColors => {
 };
 
 const generateInStoreStockText = (location: StockLocation): string => {
+    if (!location.inStoreStockLevel) {
+        return "Item not sold in store";
+    }
     if (location.inStoreStockLevel === "High") {
         return "In stock in store";
     }
@@ -95,9 +98,7 @@ export const MarkerWithInfoWindow = (props: MarkerWithInfoWindowProps) => {
                             Quantity available for click and collect:{" "}
                             {location.quantityAvailable}
                         </p>
-                        {location.inStoreStockLevel && (
-                            <p>{generateInStoreStockText(location)}</p>
-                        )}
+                        <p>{generateInStoreStockText(location)}</p>
                     </div>
                 </InfoWindow>
             )}
