@@ -26,8 +26,8 @@ function App() {
         StockLocation[]
     >([]);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-    const [searchRadius, setSearchRadius] = useState<number>(25);
-    const [mapSearchRadius, setMapSearchRadius] = useState<number>(25);
+    const [searchRadius, setSearchRadius] = useState<number>(30);
+    const [mapSearchRadius, setMapSearchRadius] = useState<number>(30);
     const [searchPending, setSearchPending] = useState<boolean>(false);
     const [searchError, setSearchError] = useState<string | null>(null);
 

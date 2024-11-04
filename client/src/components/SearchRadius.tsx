@@ -27,7 +27,7 @@ export const SearchRadius = (props: SearchRadiusProps) => {
             <Slider
                 value={value}
                 onChange={handleSliderChange}
-                min={5}
+                min={10}
                 max={1000}
                 sx={{ width: 300, paddingTop: 2.75 }}
             />
@@ -37,7 +37,7 @@ export const SearchRadius = (props: SearchRadiusProps) => {
                 onChange={handleInputChange}
                 inputProps={{
                     step: 10,
-                    min: 5,
+                    min: 10,
                     max: 1000,
                     type: "number",
                 }}
