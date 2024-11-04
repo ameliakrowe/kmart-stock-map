@@ -14,19 +14,16 @@ type MarkerWithInfoWindowProps = {
 };
 
 const generatePinColors = (location: StockLocation): PinColors => {
-    if (
-        location.inStoreStockLevel === "Low" &&
-        location.quantityAvailable === 0
-    ) {
+    const isAvailableInStore =
+        !!location.inStoreStockLevel && location.inStoreStockLevel !== "Low";
+    const isAvailableCandC = location.quantityAvailable > 0;
+    if (!isAvailableInStore && !isAvailableCandC) {
         return {
             backgroundColor: "#D22D2D",
             borderColor: "#7E1B1B",
         };
     }
-    if (
-        location.inStoreStockLevel === "Low" ||
-        location.quantityAvailable === 0
-    ) {
+    if (!isAvailableInStore || !isAvailableCandC) {
         return {
             backgroundColor: "#FFCC33",
             borderColor: "#997300",
