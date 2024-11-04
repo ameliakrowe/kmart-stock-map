@@ -67,8 +67,9 @@ export const MapDisplay = (props: MapDisplayProps) => {
     }, [centerLocation]);
 
     useEffect(() => {
+        console.log("fitting %d", searchRadius);
         fitBoundsToMap(computeMapBounds(centerLocation, searchRadius));
-    }, [centerLocation, searchRadius]);
+    }, [centerLocation, fitBoundsToMap, searchRadius]);
 
     return (
         <div className="map-area">
