@@ -75,7 +75,7 @@ export const MapDisplay = (props: MapDisplayProps) => {
             <Map
                 className="Map-display"
                 center={mapCenter}
-                defaultZoom={13}
+                defaultZoom={9}
                 mapId={"dbe7c4267f83fb4e"}
                 onCenterChanged={(map) => setMapCenter(map.detail.center)}
             >
