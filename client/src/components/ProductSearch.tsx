@@ -13,7 +13,8 @@ import { ClickAndCollectLocation } from "../types/ClickAndCollectLocation";
 import { InStoreLocation } from "../types/InStoreLocation";
 import { ProductAvailabilityError } from "../types/ProductAvailabilityError";
 
-const availabilityRequestUrl = "/api/getProductAvailability";
+const apiUrl = process.env.REACT_APP_API_URL;
+const requestUrl = `${apiUrl}/api/getProductAvailability`;
 
 type ProductSearchProps = {
     currentLocation: Result;
@@ -68,7 +69,7 @@ export const ProductSearch = (props: ProductSearchProps) => {
     const fetchProductAvailability = async (productID: string) => {
         try {
             onSearchStarted();
-            const response = await axios.get(availabilityRequestUrl, {
+            const response = await axios.get(requestUrl, {
                 params: {
                     productSKU: productID,
                     postcode: currentLocation.postcode,
