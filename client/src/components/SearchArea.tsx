@@ -5,7 +5,8 @@ import { Result } from "../types/Result";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const requestUrl = "/api/getPostcodeSuggestions";
+const apiUrl = process.env.REACT_APP_API_URL;
+const requestUrl = `${apiUrl}/api/getPostcodeSuggestions`;
 
 type SearchAreaProps = {
     onSearchResultClick: (suburb: Result) => void;
