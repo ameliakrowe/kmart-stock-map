@@ -34,8 +34,9 @@ export const LocationSearchArea = (props: LocationSearchAreaProps) => {
                         query: searchInput,
                     },
                 });
+                const newResults = response.data.data.postcodeQuery as Result[];
                 setSearchResults(response.data.data.postcodeQuery as Result[]);
-                if (searchResults.length < 1) {
+                if (newResults.length < 1) {
                     setSearchError("No suburbs found. Please try again.");
                 }
             } catch (err) {
