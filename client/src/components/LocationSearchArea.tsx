@@ -1,5 +1,6 @@
 import { SearchBar } from "./SearchBar";
 import { SearchResults } from "./SearchResults";
+import { LocationSearchError } from "./LocationSearchError";
 import { Result } from "../types/Result";
 
 import React, { useEffect, useState } from "react";
@@ -8,17 +9,20 @@ import axios from "axios";
 const apiUrl = process.env.REACT_APP_API_URL;
 const requestUrl = `${apiUrl}/api/getPostcodeSuggestions`;
 
-type SearchAreaProps = {
+type LocationSearchAreaProps = {
     onSearchResultClick: (suburb: Result) => void;
 };
 
-export const SearchArea = (props: SearchAreaProps) => {
+export const LocationSearchArea = (props: LocationSearchAreaProps) => {
     const [searchInput, setSearchInput] = useState<string>("");
     const [searchResults, setSearchResults] = useState<Result[]>([]);
+    const [searchError, setSearchError] = useState<string | null>(null);
     const { onSearchResultClick } = props;
 
     useEffect(() => {
         const fetchData = async () => {
+            setSearchError(null);
+
             if (searchInput.length < 3) {
                 setSearchResults([]);
                 return;
@@ -31,8 +35,12 @@ export const SearchArea = (props: SearchAreaProps) => {
                     },
                 });
                 setSearchResults(response.data.data.postcodeQuery as Result[]);
+                if (searchResults.length < 1) {
+                    setSearchError("No suburbs found. Please try again.");
+                }
             } catch (err) {
                 console.log(err);
+                setSearchError("Something went wrong. Please try again.");
                 setSearchResults([]);
             }
         };
@@ -53,12 +61,16 @@ export const SearchArea = (props: SearchAreaProps) => {
                 }
                 value={searchInput}
             />
-            <SearchResults
-                results={searchResults}
-                handleSearchResultClick={(suburb: Result) =>
-                    onSearchResultClick(suburb)
-                }
-            />
+            {searchError ? (
+                <LocationSearchError message={searchError} />
+            ) : (
+                <SearchResults
+                    results={searchResults}
+                    handleSearchResultClick={(suburb: Result) =>
+                        onSearchResultClick(suburb)
+                    }
+                />
+            )}
         </>
     );
 };
