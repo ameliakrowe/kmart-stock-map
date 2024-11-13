@@ -10,9 +10,10 @@ import { APIProvider } from "@vis.gl/react-google-maps";
 import { StockLocation } from "./types/StockLocation";
 import { SearchError } from "./components/SearchError";
 
-const apiKey = "AIzaSyDmbbvMi4lj4awzK3ptp4ZOquivm9X6PdQ";
+const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "";
 
 function App() {
+    console.log(process.env.GOOGLE_MAPS_API_KEY);
     const [currentLocation, setCurrentLocation] = useState<Result>({
         suburb: "SYDNEY",
         postcode: "2000",
