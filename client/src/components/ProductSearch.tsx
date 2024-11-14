@@ -51,7 +51,6 @@ export const ProductSearch = (props: ProductSearchProps) => {
                         cAndCLocation.locationId ===
                         inStoreLocation.locationId.toString(),
                 );
-                console.log(matchingInStoreLocations);
                 result.push(
                     matchingInStoreLocations.length > 0
                         ? {
@@ -72,7 +71,6 @@ export const ProductSearch = (props: ProductSearchProps) => {
             const response = await axios.get(requestUrl, {
                 params: {
                     productSKU: productID,
-                    postcode: currentLocation.postcode,
                     lat: currentLocation.location.lat,
                     lon: currentLocation.location.lon,
                     searchRadius,
