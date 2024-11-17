@@ -1,10 +1,11 @@
 import { SearchBar } from "./SearchBar";
 import { SearchResults } from "./SearchResults";
-import { LocationSearchError } from "./LocationSearchError";
+import { LocationSearchErrorMessage } from "./LocationSearchErrorMessage";
 import { Result } from "../types/Result";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { LocationSearchError } from "../types/LocationSearchError";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const requestUrl = `${apiUrl}/api/getPostcodeSuggestions`;
@@ -40,8 +41,14 @@ export const LocationSearchArea = (props: LocationSearchAreaProps) => {
                     setSearchError("No suburbs found. Please try again.");
                 }
             } catch (err) {
-                console.log(err);
-                setSearchError("Something went wrong. Please try again.");
+                const axiosError = err as AxiosError;
+                if (axiosError.response) {
+                    const locationSearchError = axiosError.response
+                        .data as LocationSearchError;
+                    setSearchError(locationSearchError.message);
+                } else {
+                    setSearchError("Something went wrong. Please try again.");
+                }
                 setSearchResults([]);
             }
         };
@@ -63,7 +70,7 @@ export const LocationSearchArea = (props: LocationSearchAreaProps) => {
                 value={searchInput}
             />
             {searchError ? (
-                <LocationSearchError message={searchError} />
+                <LocationSearchErrorMessage message={searchError} />
             ) : (
                 <SearchResults
                     results={searchResults}

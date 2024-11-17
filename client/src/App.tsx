@@ -13,7 +13,6 @@ import { ProductSearchError } from "./components/ProductSearchError";
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || "";
 
 function App() {
-    console.log(process.env.GOOGLE_MAPS_API_KEY);
     const [currentLocation, setCurrentLocation] = useState<Result>({
         suburb: "SYDNEY",
         postcode: "2000",

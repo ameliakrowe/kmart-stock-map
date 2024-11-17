@@ -1,10 +1,12 @@
 import React from "react";
 
-type LocationSearchErrorProps = {
+type LocationSearchErrorMessageProps = {
     message: string;
 };
 
-export const LocationSearchError = (props: LocationSearchErrorProps) => {
+export const LocationSearchErrorMessage = (
+    props: LocationSearchErrorMessageProps,
+) => {
     const { message } = props;
     return (
         <div className="location-search-error">
